@@ -114,7 +114,7 @@ run -all
 
 ## Author
 
-**Agnik Maity**  
+**Arighna Bhattacharjee**  
 Institute of Engineering & Management, Kolkata
 
 ## License
