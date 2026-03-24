@@ -1,149 +1,126 @@
-# 🗳️ Digital Voting Machine (Verilog / Digital Design)
+# Digital Voting Machine (Verilog / Digital Design)
 
-## 📌 Overview
+## Overview
 
-This project implements a **Digital Voting Machine (DVM)** using **Verilog HDL**.
-It simulates a simple electronic voting system where votes are cast for three candidates and counted in real-time.
+This repository contains a **Digital Voting Machine (DVM)** implemented in **Verilog HDL**. It models a basic electronic voting system where votes are cast for three candidates and counted in real time.
 
-The design demonstrates fundamental concepts of **sequential logic**, **state control**, and **digital counters**.
+The project is intended for learning and demonstration of:
+- sequential logic design
+- state/control logic
+- synchronous counters
 
----
+## Features
 
-## ⚙️ Features
+- Voting for three candidates (A, B, C)
+- Real-time vote counting
+- Reset to clear all counts
+- Simulation waveform and synthesis outputs included
 
-* 🧑‍🤝‍🧑 Voting for multiple candidates (A, B, C)
-* 🔢 Real-time vote counting
-* 🔄 Reset functionality
-* ⚡ Efficient sequential logic design
-* 📊 Simulation waveform and synthesis outputs included
+## Working Principle
 
----
+- Each candidate has a dedicated vote input signal: `vote_A`, `vote_B`, `vote_C`.
+- When a vote signal is asserted, the corresponding counter increments on the active clock edge.
+- Counts are retained until `reset` is asserted.
 
-## 🧠 Working Principle
-
-* Each candidate is assigned a vote input signal:
-
-  * **A → Candidate A**
-  * **B → Candidate B**
-  * **C → Candidate C**
-* When a vote signal is triggered:
-
-  * The respective candidate's counter increments
-* The system maintains vote counts until reset
-
----
-
-## 🏗️ Design Details
+## Interface
 
 ### Inputs
 
-* `clk` → Clock signal
-* `reset` → Resets all vote counts
-* `vote_A`, `vote_B`, `vote_C` → Voting inputs
+| Signal | Description |
+|---|---|
+| `clk` | Clock signal |
+| `reset` | Resets all vote counts |
+| `vote_A` | Vote input for candidate A |
+| `vote_B` | Vote input for candidate B |
+| `vote_C` | Vote input for candidate C |
 
 ### Outputs
 
-* `count_A`, `count_B`, `count_C` → Vote counts
+| Signal | Description |
+|---|---|
+| `count_A` | Vote count for candidate A |
+| `count_B` | Vote count for candidate B |
+| `count_C` | Vote count for candidate C |
 
----
+## Project Structure
 
-## 📂 Project Structure
-
-```id="w8yx2d"
-Digital-Voting-Machine/
-│
+```
+Digital-Voting-Machine-with-Secure-Memory/
 ├── src/
 │   └── voting_machine.v
-│
 ├── simulation/
 │   └── waveform.png
-│
 ├── synthesis/
 │   ├── rtl_schematic.png
 │   └── synthesized_design.png
-│
 ├── output/
 │   └── results.txt
-│
 └── README.md
 ```
 
----
+## Simulation Results
 
-## 🖥️ Simulation Results
+Example observed counts during simulation:
 
 | Time (ns) | Count A | Count B | Count C |
-| --------- | ------- | ------- | ------- |
-| 0         | 0       | 0       | 0       |
-| 25000     | 1       | 0       | 0       |
-| 45000     | 1       | 1       | 0       |
-| 65000     | 1       | 1       | 1       |
-| 85000     | 2       | 1       | 1       |
-| 135000    | 2       | 2       | 1       |
-| 160000    | 0       | 0       | 0       |
+|---:|---:|---:|---:|
+| 0 | 0 | 0 | 0 |
+| 25000 | 1 | 0 | 0 |
+| 45000 | 1 | 1 | 0 |
+| 65000 | 1 | 1 | 1 |
+| 85000 | 2 | 1 | 1 |
+| 135000 | 2 | 2 | 1 |
+| 160000 | 0 | 0 | 0 |
 
----
+## Tools & Technologies
 
-## 🧪 Tools & Technologies
+- Verilog HDL
+- ModelSim and/or Vivado (simulation)
+- Xilinx Vivado (synthesis)
 
-* Verilog HDL
-* ModelSim / Vivado (Simulation)
-* Xilinx Vivado (Synthesis)
+## Getting Started
 
----
+### Clone the repository
 
-## 🚀 Getting Started
-
-### 1️⃣ Clone the Repository
-
-```bash id="9c1p2x"
-git clone https://github.com/your-username/digital-voting-machine.git
-cd digital-voting-machine
+```bash
+git clone https://github.com/Arighna2003/Digital-Voting-Machine-with-Secure-Memory.git
+cd Digital-Voting-Machine-with-Secure-Memory
 ```
 
-### 2️⃣ Run Simulation
+### Run simulation (generic)
 
-* Open in ModelSim / Vivado
-* Compile the design
-* Run simulation:
+1. Open the project in ModelSim or Vivado.
+2. Compile the design and testbench.
+3. Run the simulation (ModelSim example):
 
-```bash id="3x8kdl"
+```tcl
 run -all
 ```
 
----
+> If you have a specific testbench/top module name, add it here for a one-command run.
 
-## 📚 Applications
+## Applications
 
-* Electronic voting systems (basic model)
-* Digital counter design learning
-* FPGA-based embedded systems
-* Educational demonstration of sequential circuits
+- Educational digital-design example for synchronous counters
+- Basic model for an electronic voting system
+- FPGA learning project
 
----
+## Future Improvements
 
-## 🔮 Future Improvements
+- Voter authentication
+- Display interface (7-segment / LCD)
+- Secure voting mechanism (e.g., vote locking/debouncing, access control)
+- Remote/IoT-based voting integration
 
-* Voter authentication system
-* Display interface (7-segment / LCD)
-* Secure voting mechanism
-* Remote/IoT-based voting integration
+## Author
 
----
-
-## 👨‍💻 Author
-
-**Agnik Maity**
+**Agnik Maity**  
 Institute of Engineering & Management, Kolkata
 
----
+## License
 
-## 📜 License
+License information is currently listed as "GNU License". Consider adding a `LICENSE` file and specifying the exact license (e.g., GPL-3.0).
 
-This project is licensed under the **GNU License**.
-
----
-
-## ⭐ Support
+## Support
 
 If you found this useful, consider giving it a ⭐ on GitHub!
