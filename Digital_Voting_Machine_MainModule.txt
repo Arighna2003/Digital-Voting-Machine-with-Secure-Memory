@@ -1,0 +1,45 @@
+module VotingMachineSecure(
+    input clk,            // Clock
+    input reset,          // Normal reset (temporary clear, like machine reset)
+    input secure_reset,   // Secure reset (factory reset, clears memory too)
+    input vote_A,         // Vote for Candidate A
+    input vote_B,         // Vote for Candidate B
+    input vote_C,         // Vote for Candidate C
+    output reg [3:0] count_A, // Votes for A
+    output reg [3:0] count_B, // Votes for B
+    output reg [3:0] count_C  // Votes for C
+);
+
+    // Secure memory registers (like EEPROM)
+    reg [3:0] mem_A, mem_B, mem_C;
+
+    // Sequential logic
+    always @(posedge clk or posedge secure_reset) begin
+        if (secure_reset) begin
+            // Full factory reset - clears secure memory
+            mem_A <= 0; mem_B <= 0; mem_C <= 0;
+            count_A <= 0; count_B <= 0; count_C <= 0;
+        end
+        else if (reset) begin
+            // Normal reset - only reloads counts from memory
+            count_A <= mem_A;
+            count_B <= mem_B;
+            count_C <= mem_C;
+        end
+        else begin
+            // Voting logic
+            if (vote_A) begin
+                mem_A <= mem_A + 1;
+                count_A <= mem_A + 1;
+            end
+            else if (vote_B) begin
+                mem_B <= mem_B + 1;
+                count_B <= mem_B + 1;
+            end
+            else if (vote_C) begin
+                mem_C <= mem_C + 1;
+                count_C <= mem_C + 1;
+            end
+        end
+    end
+endmodule

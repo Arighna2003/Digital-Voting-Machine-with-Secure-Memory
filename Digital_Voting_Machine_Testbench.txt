@@ -1,0 +1,53 @@
+module VotingMachineSecure_TB;
+
+    reg clk, reset, secure_reset;
+    reg vote_A, vote_B, vote_C;
+    wire [3:0] count_A, count_B, count_C;
+
+    // Instantiate the DUT
+    VotingMachineSecure dut (
+        .clk(clk), .reset(reset), .secure_reset(secure_reset),
+        .vote_A(vote_A), .vote_B(vote_B), .vote_C(vote_C),
+        .count_A(count_A), .count_B(count_B), .count_C(count_C)
+    );
+
+    // Clock generation
+    always #5 clk = ~clk;
+
+    initial begin
+        // VCD dump setup for GTKWave
+        $dumpfile("VotingMachineSecure.vcd");
+        $dumpvars(0, VotingMachineSecure_TB);
+
+        // Initialize
+        clk = 0; reset = 0; secure_reset = 0;
+        vote_A = 0; vote_B = 0; vote_C = 0;
+
+        // Factory reset
+        secure_reset = 1; #10 secure_reset = 0;
+
+        // Voting simulation
+        #10 vote_A = 1; #10 vote_A = 0;   // A gets 1 vote
+        #10 vote_B = 1; #10 vote_B = 0;   // B gets 1 vote
+        #10 vote_C = 1; #10 vote_C = 0;   // C gets 1 vote
+        #10 vote_A = 1; #10 vote_A = 0;   // A gets another vote
+
+        // Normal reset (votes should remain stored)
+        #20 reset = 1; #10 reset = 0;
+
+        // More votes after reset
+        #10 vote_B = 1; #10 vote_B = 0;   // B gets another vote
+
+        // Secure reset (all memory cleared)
+        #20 secure_reset = 1; #10 secure_reset = 0;
+
+        // End simulation
+        #30 $finish;
+    end
+
+    // Monitor console outputs
+    initial begin
+        $monitor("T=%0t | A=%d | B=%d | C=%d",
+                  $time, count_A, count_B, count_C);
+    end
+endmodule
